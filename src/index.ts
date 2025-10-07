@@ -1,17 +1,22 @@
-import i10n from './l10n'
+import rawL10n from './l10n'
 ;(function (Scratch) {
   if (Scratch.extensions.unsandboxed === false) {
     throw new Error('Sandboxed mode is not supported')
   }
-  // Your extension's code
+  function l10n(id: string): string {
+    return Scratch.translate({
+      id,
+      default: rawL10n['zh-cn'][id as keyof (typeof rawL10n)['zh-cn']],
+      description: id
+    })
+  }
+
   class YourExtension implements Scratch.Extension {
     runtime: VM.Runtime
     constructor(runtime: VM.Runtime) {
       this.runtime = runtime
     }
-    getI10n(id: string) {
-      return Scratch.translate({ id: id, default: id })
-    }
+
     getInfo() {
       return {
         id: 'newExtension',
