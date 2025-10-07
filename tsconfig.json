@@ -29,7 +29,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "types": [],
-    "baseUrl": ".",
     "paths": {
       // "~/*": [
       //   "./types/*"
@@ -45,7 +44,7 @@
     },
     "lib": ["ESNext", "DOM"],
     "target": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "outDir": "dist",
     "declaration": true
   },
