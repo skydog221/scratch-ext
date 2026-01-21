@@ -3,13 +3,6 @@ import rawL10n from './l10n'
   if (Scratch.extensions.unsandboxed === false) {
     throw new Error('Sandboxed mode is not supported')
   }
-  function l10n(id: keyof (typeof rawL10n)['zh-cn']): string {
-    return Scratch.translate({
-      id,
-      default: rawL10n['zh-cn'][id],
-      description: id
-    })
-  }
 
   class Confetti implements Scratch.Extension {
     runtime: VM.Runtime
@@ -19,7 +12,7 @@ import rawL10n from './l10n'
       // @ts-ignore
       this._formatMessage = runtime.getFormatMessage(rawL10n)
     }
-    formatMessage(id: string) {
+    l10n(id: keyof (typeof rawL10n)['zh-cn']) {
       return this._formatMessage({
         id,
         default: id,
@@ -34,7 +27,7 @@ import rawL10n from './l10n'
           {
             blockType: Scratch.BlockType.COMMAND,
             opcode: 'test',
-            text: l10n('confetti.name')
+            text: this.l10n('confetti.name')
           }
         ]
       }
