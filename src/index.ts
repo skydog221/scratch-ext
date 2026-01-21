@@ -11,16 +11,25 @@ import rawL10n from './l10n'
     })
   }
 
-  class YourExtension implements Scratch.Extension {
+  class Confetti implements Scratch.Extension {
     runtime: VM.Runtime
+    _formatMessage: any
     constructor(runtime: VM.Runtime) {
       this.runtime = runtime
+      // @ts-ignore
+      this._formatMessage = runtime.getFormatMessage(rawL10n)
     }
-
+    formatMessage(id: string) {
+      return this._formatMessage({
+        id,
+        default: id,
+        description: id
+      })
+    }
     getInfo() {
       return {
         id: 'newExtension',
-        name: "FurryR's example extension",
+        name: 'example extension',
         blocks: [
           {
             blockType: Scratch.BlockType.COMMAND,
@@ -34,14 +43,14 @@ import rawL10n from './l10n'
       console.log('Hello World', args, util)
     }
   }
-
+  // @ts-ignore
   if (!Scratch.vm.runtime.gandi) {
     // For Turbowarp
-    Scratch.extensions.register(new YourExtension(Scratch.runtime))
+    Scratch.extensions.register(new Confetti(Scratch.runtime))
   } else {
     // For Gandi
     window.tempExt = {
-      Extension: YourExtension,
+      Extension: Confetti,
       info: {
         extensionId: 'confetti',
         name: 'confetti.name',
